@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Pastbin with AES</title>
+		<title>Pastebin with AES</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<style type="text/css">
 			*{margin:0;padding:0;}
@@ -46,7 +46,7 @@
 
 	<body>
 		<form action="index.php" method="post">
-			<h1><a href="#">Pastbin with AES</a></h1><br/><br/>
+			<h1><a href="index.php">Pastebin with AES</a></h1><br/><br/>
 
 			<label for="expire">Expires: </label>
 			<select name="expire" id="expire">
@@ -113,7 +113,7 @@
 						$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
 
 						//Set encoding of encrypt text
-						$plaintext_utf8 = utf8_encode(nl2br($_POST["toCrypt"]));
+						$plaintext_utf8 = utf8_encode(nl2br(htmlspecialchars($_POST["toCrypt"])));
 
 						//Create cipher text compatile with AES
 						//Don't work with text ending with 00h because of auto delte of final 0

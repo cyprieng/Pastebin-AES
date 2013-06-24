@@ -159,7 +159,8 @@
 						fclose($file);
 
 						//Show link and crypted text
-						$url = pathinfo("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+            $PROTOCOL = ($_SERVER['HTTPS'] == 'on') ? "https":"http";
+						$url = pathinfo("$PROTOCOL://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 						echo  "<strong>Encrypted text:</strong> <a href=\"". $url["dirname"] . DIRECTORY_SEPARATOR ."?decrypt=". urlencode($filename) ."\" />Share link</a><br/>" . $ciphertext_base64;
 					}
 					else if(!empty($_POST['decrypt'])){ //Decrypt

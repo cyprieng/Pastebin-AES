@@ -164,7 +164,7 @@
 						fclose($file);
 
 						//Show link and crypted text
-            			$PROTOCOL = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https":"http";
+						$PROTOCOL = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https":"http";
 						$url = pathinfo("$PROTOCOL://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 
 						if(isset($_POST["noPass"]))
@@ -182,6 +182,10 @@
 						//Get IV
 						$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
 						$iv_dec = substr($ciphertext_dec, 0, $iv_size);
+						
+						//Check IV size
+						$iv_check = mcrypt_create_iv($iv_size, MCRYPT_RAND); //Reference IV
+						if(strlen($iv_dec) != strlen($iv_check)) exit("Encrypted text is not valid !"); //Length are different => Text is not valid
 
 						//Get decrypted text
 						$ciphertext_dec = substr($ciphertext_dec, $iv_size);
